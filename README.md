@@ -30,7 +30,7 @@ function frame2Fn (){
 /* script in frame 1 */
 tincan.talk(
 	function(){
-		return this.frame1Fn();
+		return this.frame2Fn();
 	},
 	function onSuccess(result){
 		console.log(result) // will print 'hello from frame 2'
@@ -43,7 +43,7 @@ tincan.talk(
 /* script in frame 2 */
 tincan.talk(
 	function(){
-		return this.frame2Fn();
+		return this.frame1Fn();
 	},
 	function onSuccess(result){
 		console.log(result) // will print 'hello from frame 1'
