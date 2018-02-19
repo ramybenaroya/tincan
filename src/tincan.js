@@ -1,6 +1,7 @@
 var v = '__VERSION__';
 
-function Tincan(otherWindow, otherOrigin) {
+function Tincan(otherWindow, otherOrigin, context) {
+	this._context = context || window;
 	this._otherWindow = otherWindow;
 	this._otherOrigin = otherOrigin;
 	this._uid = Math.random();
@@ -25,9 +26,9 @@ Tincan.prototype._onMessage = function(event) {
 		f = new Function(message.f.replace('function', 'return function'))();
 		try {
 			if (f.length > 0) {
-				f.call(window, done, fail);
+				f.call(that.context, done, fail);
 			} else {
-				result = f.call(window);
+				result = f.call(that.context);
 				done(result);
 			}
 		} catch (e) {
