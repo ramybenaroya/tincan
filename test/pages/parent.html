@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Tincan Test - Parent</title>
+        <script src ='../../dist/tincan.js'></script>
+        <style>
+        	body {
+        		display: inline-block;
+        		border: 1px solid black;
+        		padding: 20px;
+        	}
+        	iframe {
+        		margin: 20px;
+        	}
+    	</style>
+    </head>
+    <body>
+    	<h3 id="headline"></h3>
+        <button id="get_child_data" onclick="getChildData();">Get Child Data</button>
+        <button id="get_child_error" onclick="getChildError();">Get Child Error</button>
+        <button id="get_child_async_data" onclick="getChildAsyncData();">Get Child Async Data</button>
+        <button id="get_child_async_error" onclick="getChildAsyncError();">Get Child Async Error</button>
+        <br/>
+        <textarea id="parent_log"></textarea>
+        <br/>
+        <iframe name="child" src="http://localhost:3000/test/pages/child.html"></iframe>
+        <script>
+        	function getDataOfParent(){
+        		return 'This is data from parent';
+        	}
+
+            function getErrorOfParent(){
+                throw new Error('Error of parent.getDataOfParent');
+            }
+
+        	function getAsyncDataOfParent(success /* , fail */){
+        		setTimeout(function(){
+        			return success('This is async data from parent');
+        		})
+        	}
+
+            function getAsyncErrorOfParent(success, fail){
+                setTimeout(function(){
+                    fail(new Error('Error of parent.getAsyncErrorOfParent'));
+                })
+            }
+        </script>
+
+        <script>
+        	window.headline.innerText = window.location.origin;
+        	var tincan = new Tincan(window.child, 'http://localhost:3000');
+        	function getChildData(){
+                tincan.talk(function(){
+                    // will call getDataOfChild from child window
+                    return this.getDataOfChild(); // `this` here is child's window
+                }, showResult, showError);
+            }
+
+            function getChildError(){
+                tincan.talk(function(){
+                    // will call getErrorOfChild from child window
+                    return this.getErrorOfChild(); // `this` here is child's window
+                }, showResult, showError);
+            }
+
+            function getChildAsyncData(){
+                tincan.talk(function(done, fail){
+                    // will call getAsyncDataOfChild from child window
+                    return this.getAsyncDataOfChild(done, fail); // `this` here is child's window
+                }, showResult, showError);
+            }
+
+            function getChildAsyncError(){
+                tincan.talk(function(done, fail){
+                    // will call getAsyncErrorOfChild from child window
+                    return this.getAsyncErrorOfChild(done, fail); // `this` here is child's window
+                }, showResult, showError);
+            }
+
+        	function showResult(result) {
+    			window.parent_log.value = result;
+    		}
+
+    		function showError(error) {
+    			window.parent_log.value = error.message +'\n' + error.stack;
+    		}
+        </script>
+    </body>
+</html>

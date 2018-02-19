@@ -1,0 +1,35 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: streamrail/circle2:latest
+        env:
+          - DISPLAY=:99
+          - CHROME_BIN=/usr/bin/google-chrome
+    working_directory: /tincan
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - restore_cache:
+          keys:
+            - tincan-npm-deps-{{ .Branch }}
+      - run:
+          name: NPM Install
+          command: |
+            npm prune
+            npm install
+            npm update
+      - save_cache:
+          key: tincan-npm-deps-{{ .Branch }}
+          paths:
+            - node_modules
+      - run:
+          name: Run Tests
+          command: |
+            xvfb-run npm run test
+      - run:
+          name: Deploy
+          command: |
+            npm run deploy

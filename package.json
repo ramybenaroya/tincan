@@ -1,0 +1,33 @@
+{
+    "name": "@streamrail/tincan",
+    "version": "1.0.0",
+    "description": "",
+    "main": "src/tincan.js",
+    "scripts": {
+        "format": "prettier-eslint --write \"{src,test}/**/*.js\" --tab-width 4 --use-tabs true --print-width 120 --single-quote true",
+        "test": "mocha test/bootstrap.js --recursive test",
+        "serve": "serve -p 3000",
+        "build": "cat ./src/tincan.js | sed -e \"s/__VERSION__/${CIRCLE_BUILD_NUM}/g\" | umd Tincan -c | uglifyjs -c -m --mangle-props regex=/^_/ > ./dist/tincan.js",
+        "deploy": "if [ -z ${CIRCLE_BUILD_NUM+x} ]; then echo \"CIRCLE_BUILD_NUM is unset\"; else aws --region us-west-2 s3 cp ./dist/tincan.js s3://sdk.streamrail.com/tincan/tincan.version.$CIRCLE_BUILD_NUM.js; fi",
+        "deploy-prod": "if [ -z ${BUILD+x} ]; then echo \"BUILD is unset\"; else \"aws --region us-west-2 s3 cp s3://sdk.streamrail.com/tincan/tincan.version.$BUILD.js s3://sdk.streamrail.com/tincan/tincan.js\"; fi"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "chai": "^4.1.2",
+        "husky": "^0.14.3",
+        "lint-staged": "^6.1.1",
+        "lodash": "^4.17.5",
+        "mocha": "^5.0.1",
+        "puppeteer": "^1.1.0",
+        "serve": "^6.4.9",
+        "uglify-js": "^3.3.11",
+        "umd": "^3.0.1"
+    },
+    "lint-staged": {
+        "*.js": [
+            "prettier-eslint --write --tab-width 4 --use-tabs true --print-width 120 --single-quote true",
+            "git add"
+        ]
+    }
+}
