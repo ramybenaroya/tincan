@@ -14,7 +14,7 @@ jobs:
           docker_layer_caching: true
       - restore_cache:
           keys:
-            - tincan-npm-deps-{{ .Branch }}
+            - tincan-npm-deps-{{ .Branch }}-v1
       - run:
           name: NPM Install
           command: |
@@ -22,7 +22,7 @@ jobs:
             npm install
             npm update
       - save_cache:
-          key: tincan-npm-deps-{{ .Branch }}
+          key: tincan-npm-deps-{{ .Branch }}-v1
           paths:
             - node_modules
       - run:
