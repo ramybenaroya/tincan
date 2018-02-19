@@ -33,10 +33,10 @@ tincan.talk(
 		return this.frame1Fn();
 	},
 	function onSuccess(result){
-		console.log(result) // will print 'hello from frame 1'
+		console.log(result) // will print 'hello from frame 2'
 	}),
 	function onError(error){
-		console.error(error.message) // will print an error id occured in frame1
+		console.error(error.message) // will print an error id occured in frame2
 	})
 );
 
@@ -46,10 +46,10 @@ tincan.talk(
 		return this.frame2Fn();
 	},
 	function onSuccess(result){
-		console.log(result) // will print 'hello from frame 2'
+		console.log(result) // will print 'hello from frame 1'
 	}),
 	function onError(error){
-		console.error(error.message) // will print an error id occured in frame2
+		console.error(error.message) // will print an error id occured in frame1
 	})
 );
 ```
