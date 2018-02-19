@@ -1,6 +1,6 @@
 describe('Parent Child Test', function() {
 	let page;
-	this.timeout(1000000);
+	this.timeout(30000);
 
 	before(async function() {
 		page = await browser.newPage();
