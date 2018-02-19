@@ -24,7 +24,7 @@ function frame2Fn (){
 }
 ```
 
-### Application
+### Execution
 
 ```javascript
 /* script in frame 1 */
@@ -55,6 +55,7 @@ tincan.talk(
 ```
 
 ### Gotchas
+- Both frames have to use the same version of `tincan`.
 - For child frames within a `file://`  parent , initialize the child's tincan instance with `'*'` origin
 
 
