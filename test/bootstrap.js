@@ -6,8 +6,7 @@ const globalVariables = _.pick(global, ['browser', 'expect']);
 // puppeteer options
 const opts = {
 	headless: true,
-	timeout: 10000,
-	args: ['--no-sandbox', '--disable-setuid-sandbox']
+	timeout: 10000
 };
 
 // expose variables

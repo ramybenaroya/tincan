@@ -28,7 +28,7 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            xvfb-run npm run test
+            npm run test
       - run:
           name: Deploy
           command: |
