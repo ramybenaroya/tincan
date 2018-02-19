@@ -5,7 +5,7 @@
     "main": "src/tincan.js",
     "scripts": {
         "format": "prettier-eslint --write \"{src,test}/**/*.js\" --tab-width 4 --use-tabs true --print-width 120 --single-quote true",
-        "test": "mocha test/bootstrap.js --recursive test",
+        "test": "npm run serve & mocha test/bootstrap.js --recursive test",
         "serve": "serve -p 3000",
         "build": "cat ./src/tincan.js | sed -e \"s/__VERSION__/${CIRCLE_BUILD_NUM}/g\" | umd Tincan -c | uglifyjs -c -m --mangle-props regex=/^_/ > ./dist/tincan.js",
         "deploy": "if [ -z ${CIRCLE_BUILD_NUM+x} ]; then echo \"CIRCLE_BUILD_NUM is unset\"; else aws --region us-west-2 s3 cp ./dist/tincan.js s3://sdk.streamrail.com/tincan/tincan.version.$CIRCLE_BUILD_NUM.js; fi",
