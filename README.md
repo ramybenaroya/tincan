@@ -20,7 +20,7 @@ function frame1Fn (){
 /* script in frame 2 */
 const tincan = new Tincan(frame1Window, 'https://frame2.origin.com', context /* `window` by default */);
 function frame2Fn (){
-	return 'hello from frame 1';
+	return 'hello from frame 2';
 }
 ```
 
