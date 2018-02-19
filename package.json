@@ -9,7 +9,7 @@
         "serve": "serve -p 3000",
         "build": "cat ./src/tincan.js | sed -e \"s/__VERSION__/${CIRCLE_BUILD_NUM}/g\" | umd Tincan -c | uglifyjs -c -m --mangle-props regex=/^_/ > ./dist/tincan.js",
         "deploy": "if [ -z ${CIRCLE_BUILD_NUM+x} ]; then echo \"CIRCLE_BUILD_NUM is unset\"; else aws --region us-west-2 s3 cp ./dist/tincan.js s3://sdk.streamrail.com/tincan/tincan.version.$CIRCLE_BUILD_NUM.js; fi",
-        "deploy-prod": "if [ -z ${BUILD+x} ]; then echo \"BUILD is unset\"; else \"aws --region us-west-2 s3 cp s3://sdk.streamrail.com/tincan/tincan.version.$BUILD.js s3://sdk.streamrail.com/tincan/tincan.js\"; fi"
+        "deploy-prod": "if [ -z ${BUILD+x} ]; then echo \"BUILD is unset\"; else aws --region us-west-2 s3 cp s3://sdk.streamrail.com/tincan/tincan.version.$BUILD.js s3://sdk.streamrail.com/tincan/tincan.js; fi"
     },
     "author": "",
     "license": "ISC",
