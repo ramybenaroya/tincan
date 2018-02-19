@@ -1,0 +1,20 @@
+machine:
+  node:
+    version: 8.2.0
+
+dependencies:
+  override:
+    - npm prune
+    - npm install
+    - npm update
+
+test:
+  override:
+    - npm run build
+    - npm test
+
+deployment:
+  s3:
+    branch: /.*/
+    commands:
+      - npm run deploy
