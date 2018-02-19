@@ -21,6 +21,10 @@ jobs:
             npm prune
             npm install
             npm update
+      - run:
+          name: AWS Install
+          command: |
+            pip install awscli
       - save_cache:
           key: tincan-npm-deps-{{ .Branch }}-v1
           paths:
