@@ -4,7 +4,7 @@ machine:
 
 dependencies:
   override:
-    - npm prune
+    - npm prune || exit 0
     - npm install
     - npm update
 
